@@ -1,0 +1,16 @@
+{
+    "name": "albaguy/eloquerm",
+    "description": "PHP ORM Project(Object-relational mapping)",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Eloquerm\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ermal",
+            "email": "ermal1091@gmail.com"
+        }
+    ]
+}
