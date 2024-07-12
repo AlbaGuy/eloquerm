@@ -99,7 +99,7 @@ class Builder implements BuilderInterface
 }
 
 
-    public function delete($conditions)
+    public function delete($conditions=[])
     {
         $sql = "DELETE FROM {$this->table}" . $this->buildWhere($conditions);
         $stmt = $this->connection->prepare($sql);

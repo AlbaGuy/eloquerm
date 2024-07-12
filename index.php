@@ -23,6 +23,7 @@ DB::select('CREATE TABLE IF NOT EXISTS pdf (
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )');
 
+
 //create or update an user
 $user = new User(['first_name' => 'Ermal',
 				  'last_name' => 'Xhaka',
@@ -64,6 +65,10 @@ $pdf = new PDF(['name' => 'firstPDF']);
 //$user->delete();
 //OR
 //$user->delete(1);
+//FACEDE DELETE CONDITION
+//DB::table('pdf')->where('name', '=', 'firstPDF')->delete();
+//FACEDE DELETE ALL
+//DB::table('pdf')->delete();
 
 
 
