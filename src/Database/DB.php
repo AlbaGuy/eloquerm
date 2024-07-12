@@ -50,10 +50,10 @@ class DBPDOStatement extends PDOStatement
 {
     protected function __construct() {}
 
-    public function execute($input_parameters = null)
+    public function execute(?array $params = null): bool
     {
         try {
-            return parent::execute($input_parameters);
+            return parent::execute($params);
         } catch (PDOException $e) {
             die('<b style="color:red">Errore durante l\'esecuzione della query:</b> ' . $e->getMessage());
         }
