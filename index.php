@@ -2,27 +2,29 @@
 require_once $_SERVER["DOCUMENT_ROOT"].'/src/config/Database.php';
 require_once $_SERVER["DOCUMENT_ROOT"].'/vendor/autoload.php';
 use Eloquerm\Database\DB;
+use Eloquerm\Database\Schema\Schema;
+use Eloquerm\Database\Schema\Blueprint;
 use Eloquerm\Model\PDF;
 use Eloquerm\Model\User;
 
-//create user table
-DB::select('CREATE TABLE IF NOT EXISTS users (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                username VARCHAR(255) UNIQUE NOT NULL,
-                email VARCHAR(255) UNIQUE NOT NULL,
-                password VARCHAR(255) NOT NULL,
-                first_name VARCHAR(255),
-                last_name VARCHAR(255),
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )');
 
-//create PDF table
-DB::select('CREATE TABLE IF NOT EXISTS pdf (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR(255) NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )');
+Schema::create('users', function (Blueprint $table) {
+    $table->id();
+    $table->string('username');
+    $table->string('email');
+    $table->string('password');
+    $table->string('first_name');
+    $table->string('last_name');
+    $table->timestamps();
+});
 
+Schema::create('pdf', function (Blueprint $table) {
+    $table->id();
+    $table->string('username');
+    $table->string('name');
+    $table->integer('userIdFK',19);
+    $table->timestamps();
+});
 
 //create or update an user
 $user = new User(['first_name' => 'Ermal',

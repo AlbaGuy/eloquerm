@@ -87,16 +87,16 @@ class Builder implements BuilderInterface
         return $this->connection->lastInsertId();
     }
 
-   public function update($data, $conditions)
-{
-    $set = implode(' = ?, ', array_keys($data)) . ' = ?';
-    $sql = "UPDATE {$this->table} SET {$set}" . $this->buildWhere($conditions);
-    
-    $stmt = $this->connection->prepare($sql);
-    $params = array_merge(array_values($data), $this->getBindings($conditions));
-    $stmt->execute($params);
-    return $stmt->rowCount();
-}
+    public function update($data, $conditions)
+    {
+        $set = implode(' = ?, ', array_keys($data)) . ' = ?';
+        $sql = "UPDATE {$this->table} SET {$set}" . $this->buildWhere($conditions);
+        
+        $stmt = $this->connection->prepare($sql);
+        $params = array_merge(array_values($data), $this->getBindings($conditions));
+        $stmt->execute($params);
+        return $stmt->rowCount();
+    }
 
 
     public function delete($conditions=[])
@@ -107,60 +107,65 @@ class Builder implements BuilderInterface
         return $stmt->rowCount();
     }
 
- protected function buildWhere($additionalConditions = [])
-{
-    $where = '';
-    $allConditions = [];
+    protected function buildWhere($additionalConditions = [])
+    {
+        $where = '';
+        $allConditions = [];
 
-    // add conditions
-    if (!empty($this->where)) {
-        foreach ($this->where as $condition) {
-            $allConditions[] = $condition;
+        // add conditions
+        if (!empty($this->where)) {
+            foreach ($this->where as $condition) {
+                $allConditions[] = $condition;
+            }
         }
-    }
 
-    if (!empty($additionalConditions)) {
-        foreach ($additionalConditions as $column => $value) {
-            $allConditions[] = [$column, '=', $value];
+        if (!empty($additionalConditions)) {
+            foreach ($additionalConditions as $column => $value) {
+                $allConditions[] = [$column, '=', $value];
+            }
         }
-    }
 
-    if (!empty($allConditions)) {
-        $clauses = [];
-        foreach ($allConditions as $condition) {
-            $clauses[] = "{$condition[0]} {$condition[1]} ?";
+        if (!empty($allConditions)) {
+            $clauses = [];
+            foreach ($allConditions as $condition) {
+                $clauses[] = "{$condition[0]} {$condition[1]} ?";
+            }
+            $where = ' WHERE ' . implode(' AND ', $clauses);
         }
-        $where = ' WHERE ' . implode(' AND ', $clauses);
-    }
 
-    return $where;
-}
+        return $where;
+    }
 
 
     protected function getBindings($additionalConditions = [])
-{
-    $bindings = [];
-    $allConditions = [];
+    {
+        $bindings = [];
+        $allConditions = [];
 
-    if (!empty($this->where)) {
-        foreach ($this->where as $condition) {
-            $allConditions[] = $condition;
+        if (!empty($this->where)) {
+            foreach ($this->where as $condition) {
+                $allConditions[] = $condition;
+            }
         }
-    }
 
-    if (!empty($additionalConditions)) {
-        foreach ($additionalConditions as $column => $value) {
-            $allConditions[] = [$column, '=', $value];
+        if (!empty($additionalConditions)) {
+            foreach ($additionalConditions as $column => $value) {
+                $allConditions[] = [$column, '=', $value];
+            }
         }
+
+        foreach ($allConditions as $condition) {
+            $bindings[] = $condition[2];
+        }
+
+        return $bindings;
     }
 
-    foreach ($allConditions as $condition) {
-        $bindings[] = $condition[2];
+    public function query($sql, $bindings = [])
+    {
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute($bindings);
+        return $stmt;
     }
-
-    return $bindings;
-}
-
-
 
 }
