@@ -1,7 +1,7 @@
 <?php
-namespace Eloquerm\Database\Schema;
+namespace Eloquerm\Database\Facedes;
 use Eloquerm\Database\Query\Builder;
-use Eloquerm\Database\DB;
+use Eloquerm\Database\Schema\Blueprint;
 
 class Schema
 {

@@ -1,7 +1,7 @@
 <?php
 namespace Eloquerm\Database\Query;
 
-use Eloquerm\Database\DB;
+use Eloquerm\Database\Facedes\DB;
 
 interface BuilderInterface
 {

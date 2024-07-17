@@ -1,5 +1,5 @@
 <?php
-namespace Eloquerm\Database;
+namespace Eloquerm\Database\Facedes;
 
 use PDO;
 use PDOStatement;

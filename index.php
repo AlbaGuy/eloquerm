@@ -1,8 +1,8 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"].'/src/config/Database.php';
 require_once $_SERVER["DOCUMENT_ROOT"].'/vendor/autoload.php';
-use Eloquerm\Database\DB;
-use Eloquerm\Database\Schema\Schema;
+use Eloquerm\Database\Facedes\DB;
+use Eloquerm\Database\Facedes\Schema;
 use Eloquerm\Database\Schema\Blueprint;
 use Eloquerm\Model\PDF;
 use Eloquerm\Model\User;
