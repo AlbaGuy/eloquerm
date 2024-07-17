@@ -18,15 +18,34 @@ class Blueprint
         return $this;
     }
 
-    public function integer($column, $length = 11)
+    public function integer($column=NULL, $length = 11)
     {
-        $this->columns[] = "$column INTEGER($length)";
+        if(isset($column))
+            $this->columns[] = "$column INTEGER($length)";
         return $this;
     }
 
-    public function string($column, $length = 255)
+    public function string($column=NULL, $length = 255)
     {
-        $this->columns[] = "$column VARCHAR($length)";
+        if(isset($column))
+            $this->columns[] = "$column VARCHAR($length)";
+        return $this;
+    }
+
+    public function unique() {
+        if (!empty($this->columns)) {
+            $lastIndex = count($this->columns) - 1;
+            $this->columns[$lastIndex] .= " UNIQUE";
+        }
+        return $this;
+    }
+
+    public function index($indexes) {
+        if(!empty($indexes) && is_array($indexes)){
+            foreach ($indexes as $key => $index) {
+                $this->columns[] = "INDEX ($index)";
+            }
+        }
         return $this;
     }
 

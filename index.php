@@ -10,8 +10,8 @@ use Eloquerm\Model\User;
 
 Schema::create('users', function (Blueprint $table) {
     $table->id();
-    $table->string('username');
-    $table->string('email');
+    $table->string('username')->unique();
+    $table->string('email')->unique();
     $table->string('password');
     $table->string('first_name');
     $table->string('last_name');
@@ -20,10 +20,10 @@ Schema::create('users', function (Blueprint $table) {
 
 Schema::create('pdf', function (Blueprint $table) {
     $table->id();
-    $table->string('username');
     $table->string('name');
     $table->integer('userIdFK',19);
     $table->timestamps();
+    $table->index(['name','userIdFK']);
 });
 
 //create or update an user
