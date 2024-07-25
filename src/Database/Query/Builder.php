@@ -58,7 +58,7 @@ class Builder implements BuilderInterface
         $sql = "SELECT * FROM {$this->table}" . $this->buildWhere();
         $stmt = $this->connection->prepare($sql);
         $stmt->execute($this->getBindings());
-        $results = $stmt->fetchAll($this->connection::FETCH_ASSOC);
+        $results = ($results = $stmt->fetchAll($this->connection::FETCH_ASSOC)) === false ? [] : $results;
 
         return array_map([$this->modelClass, 'toObject'], $results);
     }
@@ -68,13 +68,8 @@ class Builder implements BuilderInterface
         $sql = "SELECT * FROM {$this->table}" . $this->buildWhere() . " LIMIT 1";
         $stmt = $this->connection->prepare($sql);
         $stmt->execute($this->getBindings());
-        $result = $stmt->fetch($this->connection::FETCH_ASSOC);
-
-        if ($result) {
-            return call_user_func([$this->modelClass, 'toObject'], $result);
-        }
-
-        return null;
+        $result = ($result = $stmt->fetch($this->connection::FETCH_ASSOC)) === false ? [] : $result;
+        return call_user_func([$this->modelClass, 'toObject'], $result);
     }
 
     public function insert($data)

@@ -10,7 +10,7 @@ class Schema
         $blueprint = new Blueprint($table);
         $callback($blueprint);
         $sql = $blueprint->toSql();
-        self::builder($table)->query($sql);
+        return self::builder($table)->query($sql);
     }
 
     public static function builder($table, $className = null)
