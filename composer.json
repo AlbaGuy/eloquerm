@@ -1,7 +1,7 @@
 {
     "name": "albaguy/eloquerm",
     "type": "library",
-    "license": "GNU Affero General Public License v3.0 (AGPL-3.0)",
+    "license": "AGPL-3.0 license",
     "homepage": "https://github.com/AlbaGuy/eloquerm",
     "keywords": ["PHP", "OOP", "database", "sql", "orm"],
     "description": "PHP ORM Project(Object-relational mapping)",

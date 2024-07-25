@@ -3,7 +3,7 @@
     <img src="https://raw.githubusercontent.com/AlbaGuy/eloquerm/main/src/Assets/Images/eloquerm.png" alt="Eloquerm Logo" width="512" height="256">
 </a></p>
 
-PHP **ORM** Project(Object-relational mapping), access to DB stored data with Model or Facade.
+PHP **ORM**(Object-relational mapping) Project, access to DB stored data with Model or Facade.
 
 ## Installation
 
@@ -34,8 +34,8 @@ FACEDE
 4) [GET_ALL](#facede_GET_ALL)
 5) [GET_BY_ID](#facede_GET_BY_ID)
 6) [FIRST](#facede_FIRST)
-7) SELECT
-8) GET
+7) [SELECT](#facede_SELECT)
+8) [GET](#facede_GET)
 
 ## **Migrations**
 **Using The Schema Builder**
@@ -107,7 +107,7 @@ User::getById(1)->delete();
 ```
 
 ## **Using Facede (Interface)**
-
+<a id="facede_FIRST"></a>
 **first()**
 ```PHP
 /**
@@ -127,6 +127,7 @@ $pdf = DB::table('pdf')->getById(1);
 ```PHP
 $pdfs = DB::table('pdf')->getAll();
 ```
+<a id="facede_GET"></a>
 **get()**
 ```PHP
 /**
@@ -136,6 +137,7 @@ $pdfs = DB::table('pdf')->getAll();
 
 $pdfs = DB::table('pdf')->where('name', '=', 'firstPDF')->get();
 ```
+<a id="facede_SELECT"></a>
 **select()**
 ```PHP
 /**
