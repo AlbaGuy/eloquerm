@@ -1,6 +1,6 @@
 
 <p align="center"><a href="https://github.com/AlbaGuy/eloquerm" target="_blank">
-    <img src="/src/Assets/Images/eloquerm.PNG" alt="Eloquerm Logo" width="512" height="256">
+    <img src="https://raw.githubusercontent.com/AlbaGuy/eloquerm/main/src/Assets/Images/eloquerm.png" alt="Eloquerm Logo" width="512" height="256">
 </a></p>
 
 PHP **ORM** Project(Object-relational mapping), access to DB stored data with Model or Facade.
