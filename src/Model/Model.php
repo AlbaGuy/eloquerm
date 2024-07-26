@@ -16,7 +16,7 @@ abstract class Model
 
     public function __construct($attributes = [])
     {
-        $this->attributes = $attributes;    
+        $this->attributes = $attributes;   
         $this->initializeAttributes();
     }
 
@@ -27,18 +27,15 @@ abstract class Model
      private function initializeAttributes()
     {   
         /**
-         * Itera sugli attributi dell'oggetto e assegna i valori corrispondenti
-         * se la proprietà esiste nell'oggetto corrente.
+         * Iterates over the object's attributes and assigns corresponding values 
          * $key is the key of attributes
          * @var string
          */
         foreach ($this->attributes as $key => $attribute) {
-            if(isset($this->$key)){
                 $this->$key = $attribute;
-            }
         }
         /**
-         * Recupero i metadata degli attributi della classe.
+         * Retrieve class attribute metadata.
          * @var ReflectionClass
          */
         $reflection = new ReflectionClass($this);
@@ -54,22 +51,22 @@ abstract class Model
                 $metadataInstance = $attributesMetadata[0]->newInstance();
                 $dbColumnName = $metadataInstance->name;
                 /**
-                 * Se non esiste un attributo nella classe, creo la mappatura nell array
-                 * attributes, altrimenti all attributo setto il valore dell array attributes.
+                 * If there is no attribute in the class, I create the mapping in the attributes array, 
+                 * otherwise I set the attribute to the value of the attributes array.
                  */            
                 if(!isset($this->attributes[$dbColumnName]))
                     $this->attributes[$dbColumnName] = $this->$propertyName;
                 else
                     $this->$propertyName =   $this->attributes[$dbColumnName];
-                //rimuovo l attributo della classe dall array attributes(solo valori del DB)
+                //remove class attribute from attributes array(DB values only)
                 unset($this->attributes[$propertyName]);
             }
-        }
+        } 
     }
 
 
 
-    function printPropertyMetadata(string $className = ''){
+    public static function printPropertyMetadata(string $className = ''){
         if (empty($className)) {
             $className = static::class;
         }
@@ -117,6 +114,20 @@ abstract class Model
             $this->$name = $value;
         }
         // Return the object for potential method chaining
+        return $this;
+    }
+
+    public function setTable($value='')
+    {
+        // Set table name
+        self::$table = $value;
+        return $this;
+    }
+
+    public function setPrimaryKey($value='')
+    {
+        // Set table name
+        self::$primaryKey = $value;
         return $this;
     }
 

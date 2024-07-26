@@ -1,9 +1,9 @@
 
 <p align="center"><a href="https://github.com/AlbaGuy/eloquerm" target="_blank">
-    <img src="https://raw.githubusercontent.com/AlbaGuy/eloquerm/main/src/Assets/Images/eloquerm.png" alt="Eloquerm Logo" width="512" height="256">
+    <img src="https://raw.githubusercontent.com/AlbaGuy/eloquerm/main/src/Assets/Images/eloquerm.png" alt="Eloquerm Logo" width="312" height="156">
 </a></p>
 
-PHP **ORM**(Object-relational mapping) Project, access to DB stored data with Model or Facade.
+<div style="text-align:center"><b>PHP ORM(Object Relational mapping)</b><br> Access to DB stored data with Model or Facade.</div>
 
 ## Installation
 
@@ -16,26 +16,31 @@ composer install
 ## Examples
 On the **examples** folder you will find several examples, in the default index.php page can you access to it.
 
-MIGRATIONS
-1) [Schema Builder](#migrations)
-
-MODEL
-1) [INSERT](#model_INSERT)
-2) [UPDATE](#model_UPDATE)
-3) [DELETE](#model_DELETE)
-4) [GET_ALL](#model_GET_ALL)
-5) [GET_BY_ID](#model_GET_BY_ID)
-6) [FIRST](#model_FIRST)
-
-FACEDE
-1) [INSERT](#facede_INSERT)
-2) [UPDATE](#facede_UPDATE)
-3) [DELETE](#facede_DELETE)
-4) [GET_ALL](#facede_GET_ALL)
-5) [GET_BY_ID](#facede_GET_BY_ID)
-6) [FIRST](#facede_FIRST)
-7) [SELECT](#facede_SELECT)
-8) [GET](#facede_GET)
+>***MIGRATIONS***
+> 1) [Schema Builder](#migrations)
+> 
+> ***MODEL***
+> 1) [INSERT](#model_INSERT)
+> 2) [UPDATE](#model_UPDATE)
+> 3) [DELETE](#model_DELETE)
+> 4) [GET_ALL](#model_GET_ALL)
+> 5) [GET_BY_ID](#model_GET_BY_ID)
+> 6) [FIRST](#model_FIRST)
+> 
+> ***FACEDE***
+> 1) [INSERT](#facede_INSERT)
+> 2) [UPDATE](#facede_UPDATE)
+> 3) [DELETE](#facede_DELETE)
+> 4) [GET_ALL](#facede_GET_ALL)
+> 5) [GET_BY_ID](#facede_GET_BY_ID)
+> 6) [FIRST](#facede_FIRST)
+> 7) [SELECT](#facede_SELECT)
+> 8) [GET](#facede_GET)
+> 
+> ***ATTRIBUTE***
+> 1) [PRINT metadata Attribute Class](#attribute-printMetadata)
+> 2) [INSERT Invoice with metadata Attribute](#attribute-invoiceMetadataInsert)
+> 3) [INSERT Abstract factory Invoice Received with metadata Attribute](#attribute-invoiceReceivedMetadataInsert)
 
 ## **Migrations**
 **Using The Schema Builder**
@@ -188,8 +193,43 @@ I have the solution:
 
  You can specify it with Attribute "name" metadata as in the example:
 ```PHP
-#[Metadata(name: 'pdfName', type: 'varchar', description: 'Alias metadata of column pdfName.')]
-protected $name = 'Ermal';
+#[Metadata(name: 'numeroFattura', type: 'varchar', description: 'Invoice number length(11)')]
+protected $numero = 77;
+```
+<a id="attribute-printMetadata"></a>
+
+**PRINT metadata Attribute Class**
+```PHP
+Invoice::printPropertyMetadata();
+```
+
+<a id="attribute-invoiceMetadataInsert"></a>
+**INSERT Invoice with metadata Attribute**
+```PHP
+$id = (new Invoice(['idVenditore' =>1,
+                    'urlDocumento' => 'https://immobiliarecesenanord.com',
+                    'data' => date('Y-m-d'),
+                    'numeroFattura' => time(),
+                    'serie' => 'fs', 
+                    'importo' => 100
+                        ]))->save();
+```
+
+<a id="attribute-invoiceReceivedMetadataInsert"></a>
+**INSERT Abstract factory Invoice Received with metadata Attribute**
+```PHP
+$fatturaRicevutaFactory = new InvoiceReceivedFactory();
+$id = $fatturaRicevutaFactory->createInvoice( Array('idVenditore' =>1,
+                                                    'numero' => time(),
+                                                    'nomeTipoDoc' => "fds",
+                                                    'descrizione' => 'prova fattura ricevuta',
+                                                    'importoFattura' => 200,
+                                                    'tipologia' => 1,
+                                                    'idFornitoreFK' => 34,
+                                                    'data' => date('Y-m-d'),
+                                                    'idSpesaRicorrenteFK' => 46
+                                                              )
+                                            )->save();
 ```
 
 # Contributing to Eloquerm
@@ -212,7 +252,7 @@ We sincerely appreciate your interest in contributing to Eloquerm. Whether you'r
    git clone https://github.com/AlbaGuy/eloquerm
    ```
 ## Issues and Feedback
-If you encounter any issues or have suggestions for improvements, please open an issue on GitHub. We welcome feedback and are always looking for ways to improve the project.
+If you encounter any issues or have suggestions for improvements, please open an [issue](https://github.com/AlbaGuy/eloquerm/issues) on GitHub. We welcome feedback and are always looking for ways to improve the project.
 
 Thank you again for contributing to Eloquerm! Your efforts make a significant difference.
 

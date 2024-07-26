@@ -4,7 +4,7 @@
     "license": "AGPL-3.0 license",
     "homepage": "https://github.com/AlbaGuy/eloquerm",
     "keywords": ["PHP", "OOP", "database", "sql", "orm"],
-    "description": "PHP ORM Project(Object-relational mapping)",
+    "description": "PHP ORM(Object Relational mapping) Project",
     "support": {
         "issues": "https://github.com/AlbaGuy/eloquerm/issues",
         "source": "https://github.com/AlbaGuy/eloquerm"

@@ -1,9 +1,4 @@
 <?php
-require_once $_SERVER["DOCUMENT_ROOT"].'/src/config/Database.php';
-require_once $_SERVER["DOCUMENT_ROOT"].'/vendor/autoload.php';
-use Eloquerm\Database\Facedes\DB;
-use Eloquerm\Model\FatturaRicevutaFactory;
-
 echo '<h4>Examples:</h4>';
 echo '<h4>MIGRATIONS</h4>';
 echo '1) <a href="examples/migrations.php">Schema Builder</a></br>';
@@ -23,3 +18,7 @@ echo '5) <a href="examples/facede-getById.php">GET_BY_ID</a></br>';
 echo '6) <a href="examples/facede-first.php">FIRST</a></br>';
 echo '7) <a href="examples/facede-select.php">SELECT</a></br>';
 echo '8) <a href="examples/facede-get.php">GET</a></br>';
+echo '<h4>ATTRIBUTE</h4>';
+echo '1) <a href="examples/attribute-printMetadata.php">PRINT metadata Attribute Class</a></br>';
+echo '2) <a href="examples/attribute-invoiceMetadataInsert.php">INSERT Invoice with metadata Attribute</a></br>';
+echo '3) <a href="examples/attribute-invoiceReceivedMetadataInsert.php">INSERT Abstract factory Invoice with metadata Attribute</a></br>';
