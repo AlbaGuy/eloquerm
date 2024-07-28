@@ -37,6 +37,7 @@ class Builder implements BuilderInterface
         $this->table = $table;
         return $this;
     }
+    
     public function where($column, $operator, $value)
     {
         $this->where[] = [$column, $operator, $value];

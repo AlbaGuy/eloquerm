@@ -62,7 +62,7 @@ Schema::create('users', function (Blueprint $table) {
 <a id="model_FIRST"></a>
 **first()**
 ```PHP
-$pdf = PDF::query()->where('name', '=', 'firstPDF')->first();
+$user = User::where('email', '=', 'ermal1091@gmail.com')->first();
 ```
 <a id="model_GET_BY_ID"></a>
 **getById()**
@@ -75,7 +75,7 @@ $user = User::getById(1);
 $users = User::getAll();
 ```
 <a id="model_INSERT"></a>
-**insert() OR save()**
+**insert()**
 ```PHP
 $user = (new User(['first_name' => 'Ermal',
                   'last_name' => 'Xhaka',
@@ -84,7 +84,7 @@ $user = (new User(['first_name' => 'Ermal',
                   'password' => 'secret']))->save();
 ```
 <a id="model_UPDATE"></a>
-**update() OR save()**
+**update()**
 ```PHP
 $user = (new User(['first_name' => 'Ermal',
                    'last_name' => 'Xhaka',
@@ -206,7 +206,7 @@ Invoice::printPropertyMetadata();
 <a id="attribute-invoiceMetadataInsert"></a>
 **INSERT Invoice with metadata Attribute**
 ```PHP
-$id = new Invoice(['merchantId' =>1,
+$id = (new Invoice(['merchantId' =>1,
                    'number' => time(),
                    'date' => date('Y-m-d'),
                    'serie' => 'fs', 
@@ -218,16 +218,15 @@ $id = new Invoice(['merchantId' =>1,
 <a id="attribute-invoiceReceivedMetadataInsert"></a>
 **INSERT Abstract factory Invoice Received with metadata Attribute**
 ```PHP
-$id = $invoiceReceivedFactory->createInvoice(Array('merchant' =>1,
-                                                   'numberInvoice' => time(),
-                                                   'invoiceDate' => date('Y-m-d'),
-                                                   'invoiceAmount' => 200,
-                                                   'invoiceDescription' => 'TEST INVOICE RECEIVED',
-                                                   'serie' => "fds",
-                                                   'urlInvoice' => 'https://immobiliarecesenanord.com',
-                                                   'invoiceType' => 1
-                                                       )
-                                                  );->save();
+$id = $invoiceReceivedFactory->createInvoice(['merchant' =>1,
+                                              'numberInvoice' => time(),
+                                              'invoiceDate' => date('Y-m-d'),
+                                              'invoiceAmount' => 200,
+                                              'invoiceDescription' => 'TEST INVOICE RECEIVED',
+                                              'serie' => "fds",
+                                              'urlInvoice' => 'https://immobiliarecesenanord.com',
+                                              'invoiceType' => 1
+                                              ]);->save();
 ```
 
 # Contributing to Eloquerm

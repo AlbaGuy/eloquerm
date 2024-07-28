@@ -8,16 +8,15 @@ use Eloquerm\Model\InvoiceReceivedFactory;
 */
 
 $invoiceReceivedFactory = new InvoiceReceivedFactory();
-$invoice = $invoiceReceivedFactory->createInvoice(Array('merchant' =>1,
-                                                        'numberInvoice' => time(),
-                                                        'invoiceDate' => date('Y-m-d'),
-                                                        'invoiceAmount' => 200,
-                                                        'invoiceDescription' => 'TEST INVOICE RECEIVED',
-                                                        'serie' => "fds",
-                                                        'urlInvoice' => 'https://immobiliarecesenanord.com',
-                                                        'invoiceType' => 1
-                                                       )
-                                                  );
+$invoice = $invoiceReceivedFactory->createInvoice(['merchant' =>1,
+                                                   'numberInvoice' => time(),
+                                                   'invoiceDate' => date('Y-m-d'),
+                                                   'invoiceAmount' => 200,
+                                                   'invoiceDescription' => 'TEST INVOICE RECEIVED',
+                                                   'serie' => "fds",
+                                                   'urlInvoice' => 'https://immobiliarecesenanord.com',
+                                                   'invoiceType' => 1
+                                                  ]);
 $id = $invoice->save();
 
 echo '<b style="color:green"><span style="color:red">'.$invoice->getType().'</span> with id <b>'.$id.'</b> created successfull!</b></br>';

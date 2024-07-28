@@ -20,78 +20,6 @@ abstract class Model
         $this->initializeAttributes();
     }
 
-    /**
-     * Method to initialize attributes dynamically
-     */
-
-     private function initializeAttributes()
-    {   
-        /**
-         * Iterates over the object's attributes and assigns corresponding values 
-         * $key is the key of attributes
-         * @var string
-         */
-        foreach ($this->attributes as $key => $attribute) {
-                $this->$key = $attribute;
-        }
-        /**
-         * Retrieve class attribute metadata.
-         * @var ReflectionClass
-         */
-        $reflection = new ReflectionClass($this);
-        $properties = $reflection->getProperties(ReflectionProperty::IS_PROTECTED);
-        /**
-         * loop the metadata
-         */
-        foreach ($properties as $property) {
-            $propertyName = $property->getName();
-            $attributesMetadata = $property->getAttributes(Metadata::class);
-
-            if (!empty($attributesMetadata)) {
-                $metadataInstance = $attributesMetadata[0]->newInstance();
-                $dbColumnName = $metadataInstance->name;
-                /**
-                 * If there is no attribute in the class, I create the mapping in the attributes array, 
-                 * otherwise I set the attribute to the value of the attributes array.
-                 */            
-                if(!isset($this->attributes[$dbColumnName]))
-                    $this->attributes[$dbColumnName] = $this->$propertyName;
-                else
-                    $this->$propertyName =   $this->attributes[$dbColumnName];
-                //remove class attribute from attributes array(DB values only)
-                unset($this->attributes[$propertyName]);
-            }
-        } 
-    }
-
-
-
-    public static function printPropertyMetadata(string $className = ''){
-        if (empty($className)) {
-            $className = static::class;
-        }
-
-        $reflectionClass = new ReflectionClass($className);
-
-        foreach ($reflectionClass->getProperties() as $property) {
-            $attributes = $property->getAttributes(Metadata::class);
-
-            foreach ($attributes as $attribute) {
-                $metadata = $attribute->newInstance();
-
-                // Stampa il nome della proprietà
-                echo "Property: {$property->getName()}</br>";
-
-                // Stampa i metadati usando la riflessione
-                foreach (get_object_vars($metadata) as $key => $value) {
-                    echo ucfirst($key) . ": $value</br>";
-                }
-
-                echo "----------</br>";
-            }
-        }
-    }
-
     public function get($name)
     {
         if (array_key_exists($name, $this->attributes)) {
@@ -131,15 +59,19 @@ abstract class Model
         return $this;
     }
 
-
     public static function getAll()
     {
-        return (new Builder(static::class,static::$primaryKey))->table(static::$table)->getAll();
+        return self::query()->getAll();
     }
 
     public static function getById($id=NULL)
     {
-        return (new Builder(static::class,static::$primaryKey))->table(static::$table)->getById($id);
+        return self::query()->getById($id);
+    }
+
+    public static function where($column, $operator, $value)
+    {
+        return self::query()->where($column, $operator, $value);
     }
 
     public function save()
@@ -154,22 +86,90 @@ abstract class Model
 
     public function insert()
     {
-        $query = (new Builder(static::class,static::$primaryKey))->table(static::$table);
-        $this->attributes[static::$primaryKey] = $query->insert($this->attributes);
+        $this->attributes[static::$primaryKey] = self::query()->insert($this->attributes);
         return $this->attributes[static::$primaryKey];
     }
 
     public function update()
     {
-        $query = (new Builder(static::class,static::$primaryKey))->table(static::$table);
-        return $query->update($this->attributes, [static::$primaryKey => $this->attributes[static::$primaryKey]]);
+        return self::query()->update($this->attributes, [static::$primaryKey => $this->attributes[static::$primaryKey]]);
     }
 
     public function delete($id=NULL)
     {   
         $id = $id!= null?$id:($this->attributes[static::$primaryKey]??null);
-            $query = (new Builder(static::class,static::$primaryKey))->table(static::$table);
-        return $query->delete([static::$primaryKey => $id]);
+        return self::query()->delete([static::$primaryKey => $id]);
+    }
+
+    /**
+     * Method to initialize attributes dynamically
+     */
+
+    private function initializeAttributes()
+    {   
+        /**
+         * Iterates over the object's attributes and assigns corresponding values 
+         * $key is the key of attributes
+         * @var string
+         */
+        foreach ($this->attributes as $key => $attribute) {
+                $this->$key = $attribute;
+        }
+        /**
+         * Retrieve class attribute metadata.
+         * @var ReflectionClass
+         */
+        $reflection = new ReflectionClass($this);
+        $properties = $reflection->getProperties(ReflectionProperty::IS_PROTECTED);
+        /**
+         * loop the metadata
+         */
+        foreach ($properties as $property) {
+            $propertyName = $property->getName();
+            $attributesMetadata = $property->getAttributes(Metadata::class);
+
+            if (!empty($attributesMetadata)) {
+                $metadataInstance = $attributesMetadata[0]->newInstance();
+                $dbColumnName = $metadataInstance->name;
+                /**
+                 * If there is no attribute in the class, I create the mapping in the attributes array, 
+                 * otherwise I set the attribute to the value of the attributes array.
+                 */            
+                if(!isset($this->attributes[$dbColumnName]))
+                    $this->attributes[$dbColumnName] = $this->$propertyName;
+                else
+                    $this->$propertyName =   $this->attributes[$dbColumnName];
+                //remove class attribute from attributes array(DB values only)
+                unset($this->attributes[$propertyName]);
+            }
+        } 
+    }
+
+    public static function printPropertyMetadata(string $className = '')
+    {
+        if (empty($className)) {
+            $className = static::class;
+        }
+
+        $reflectionClass = new ReflectionClass($className);
+
+        foreach ($reflectionClass->getProperties() as $property) {
+            $attributes = $property->getAttributes(Metadata::class);
+
+            foreach ($attributes as $attribute) {
+                $metadata = $attribute->newInstance();
+
+                // Stampa il nome della proprietà
+                echo "Property: {$property->getName()}</br>";
+
+                // Stampa i metadati usando la riflessione
+                foreach (get_object_vars($metadata) as $key => $value) {
+                    echo ucfirst($key) . ": $value</br>";
+                }
+
+                echo "----------</br>";
+            }
+        }
     }
 
     public static function query()
