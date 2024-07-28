@@ -1,6 +1,6 @@
 
 <p align="center"><a href="https://github.com/AlbaGuy/eloquerm" target="_blank">
-    <img src="https://raw.githubusercontent.com/AlbaGuy/eloquerm/main/src/Assets/Images/eloquerm.png" alt="Eloquerm Logo" width="312" height="156">
+    <img src="https://raw.githubusercontent.com/AlbaGuy/eloquerm/main/src/Assets/Images/eloquerm.png" alt="Eloquerm Logo" width="312" height="100">
 </a></p>
 
 <div style="text-align:center"><b>PHP ORM(Object Relational mapping)</b><br> Access to DB stored data with Model or Facade.</div>
@@ -206,30 +206,28 @@ Invoice::printPropertyMetadata();
 <a id="attribute-invoiceMetadataInsert"></a>
 **INSERT Invoice with metadata Attribute**
 ```PHP
-$id = (new Invoice(['idVenditore' =>1,
-                    'urlDocumento' => 'https://immobiliarecesenanord.com',
-                    'data' => date('Y-m-d'),
-                    'numeroFattura' => time(),
-                    'serie' => 'fs', 
-                    'importo' => 100
-                        ]))->save();
+$id = new Invoice(['merchantId' =>1,
+                   'number' => time(),
+                   'date' => date('Y-m-d'),
+                   'serie' => 'fs', 
+                   'amount' => 300,
+                   'description' => 'TEST INVOICE'
+                    ]))->setTable('invoice_received')->setPrimaryKey('invoiceId')->save();
 ```
 
 <a id="attribute-invoiceReceivedMetadataInsert"></a>
 **INSERT Abstract factory Invoice Received with metadata Attribute**
 ```PHP
-$fatturaRicevutaFactory = new InvoiceReceivedFactory();
-$id = $fatturaRicevutaFactory->createInvoice( Array('idVenditore' =>1,
-                                                    'numero' => time(),
-                                                    'nomeTipoDoc' => "fds",
-                                                    'descrizione' => 'prova fattura ricevuta',
-                                                    'importoFattura' => 200,
-                                                    'tipologia' => 1,
-                                                    'idFornitoreFK' => 34,
-                                                    'data' => date('Y-m-d'),
-                                                    'idSpesaRicorrenteFK' => 46
-                                                              )
-                                            )->save();
+$id = $invoiceReceivedFactory->createInvoice(Array('merchant' =>1,
+                                                   'numberInvoice' => time(),
+                                                   'invoiceDate' => date('Y-m-d'),
+                                                   'invoiceAmount' => 200,
+                                                   'invoiceDescription' => 'TEST INVOICE RECEIVED',
+                                                   'serie' => "fds",
+                                                   'urlInvoice' => 'https://immobiliarecesenanord.com',
+                                                   'invoiceType' => 1
+                                                       )
+                                                  );->save();
 ```
 
 # Contributing to Eloquerm
