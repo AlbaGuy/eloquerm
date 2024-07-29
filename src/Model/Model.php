@@ -1,4 +1,13 @@
 <?php
+/**
+ * This file is part of the Eloquerm.
+ *
+ * (©) Ermal Xhaka <ermal1091@gmail.com>
+ *
+ * This source file is subject to the AGPL-3.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Eloquerm\Model;
 
 use Eloquerm\Database\Query\Builder;
@@ -13,11 +22,12 @@ abstract class Model
     protected static $table;
     protected static $primaryKey = 'id';
     protected $attributes = [];
+    protected $fillable = [];
+    protected $guarded = [];
 
     public function __construct($attributes = [])
-    {
-        $this->attributes = $attributes;   
-        $this->initializeAttributes();
+    {  
+        $this->initializeAttributes($attributes);
     }
 
     public function get($name)
@@ -102,18 +112,44 @@ abstract class Model
     }
 
     /**
+     * Only the fields marked as fillable are used in the mass assignment
+     * @param  string  $key
+     * @return boolean
+     */
+    private function isFillable($key)
+    {
+        return in_array($key, $this->fillable) || empty($this->fillable);
+    }
+
+    /**
+     * Method return if attribute that isn't mass assignable
+     */
+    /**
+     * @param  [type]  $key
+     * @return boolean
+     */
+    private function isGuarded($key)
+    {
+        return in_array($key, $this->guarded);
+    }
+    
+
+    /**
      * Method to initialize attributes dynamically
      */
 
-    private function initializeAttributes()
+    private function initializeAttributes($attributes)
     {   
         /**
          * Iterates over the object's attributes and assigns corresponding values 
          * $key is the key of attributes
          * @var string
          */
-        foreach ($this->attributes as $key => $attribute) {
+        foreach ($attributes as $key => $attribute) {
+            if ($this->isFillable($key) && !$this->isGuarded($key)) {
+                $this->attributes[$key] = $attribute;
                 $this->$key = $attribute;
+            }
         }
         /**
          * Retrieve class attribute metadata.

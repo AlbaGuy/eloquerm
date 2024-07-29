@@ -1,4 +1,13 @@
 <?php
+/**
+ * This file is part of the Eloquerm.
+ *
+ * (©) Ermal Xhaka <ermal1091@gmail.com>
+ *
+ * This source file is subject to the AGPL-3.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Eloquerm\Database\Query;
 
 use Eloquerm\Database\Facedes\DB;
@@ -37,7 +46,7 @@ class Builder implements BuilderInterface
         $this->table = $table;
         return $this;
     }
-    
+
     public function where($column, $operator, $value)
     {
         $this->where[] = [$column, $operator, $value];

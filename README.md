@@ -183,6 +183,14 @@ If table name is not same as model Class name, pass Class name as the second par
 ```PHP
 DB::table('users','User')
 ```
+The fillable property specifies which attributes should be mass-assignable.
+```PHP
+protected $fillable = ['id','name','created_at','updated_at'];
+```
+The inverse of fillable is guarded, and serves as a "black-list" instead of a "white-list".
+```PHP
+protected $guarded = ['password'];
+```
 ## Attribute
 Attributes are small meta-data elements added for PHP classes, functions, closures, class properties, class methods, constants, and even on anonymous classes.
 PHP DocBlock comments are probably the most familiar example.
@@ -193,8 +201,8 @@ I have the solution:
 
  You can specify it with Attribute "name" metadata as in the example:
 ```PHP
-#[Metadata(name: 'numeroFattura', type: 'varchar', description: 'Invoice number length(11)')]
-protected $numero = 77;
+#[Metadata(name: 'number', type: 'int', description: 'Invoice number, lenght(11)')]
+    protected $numberInvoice = 999;
 ```
 <a id="attribute-printMetadata"></a>
 
